@@ -138,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e132e61b1b2f468e2cf7bc175c6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingUIPrefab: {fileID: 2864054663391884115, guid: d2a5bdd78d9314a4195985a39d96eaca, type: 3}
+  offset: {x: 0, y: 2.3, z: 0}
 --- !u!1001 &4049329442986420248
 PrefabInstance:
   m_ObjectHideFlags: 0

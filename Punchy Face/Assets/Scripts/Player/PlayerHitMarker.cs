@@ -49,9 +49,18 @@ public class PlayerHitMarker : MonoBehaviour
                         Vector3 direction = subDirection.normalized;
                         npcGuard.OnDeath(direction, npcGuard.Spine.transform.position);
 
-                        float scale = player.CurrentPowerLevel - npcGuard.CurrentPowerLevel == 0
-                            ? 0
-                            : (player.CurrentPowerLevel - npcGuard.CurrentPowerLevel) / 10;
+                        float scale; 
+                        if (player.CurrentPowerLevel - npcGuard.CurrentPowerLevel == 0)
+                        {
+                            scale = 0;
+                        }
+                        else
+                        {
+                            scale = (player.CurrentPowerLevel - npcGuard.CurrentPowerLevel) * 0.1f;
+                        }
+
+                        player.CurrentPowerLevel = ((int)(scale * 10));
+
                         player.ScaleDown(scale);
 
                         RaycastHit hit;

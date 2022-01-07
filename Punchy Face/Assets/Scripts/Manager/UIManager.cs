@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject levelCompletePanel;
 
+    public TextMeshProUGUI CurrentLevelText { get => currentLevelText; set => currentLevelText = value; }
+
     void Start()
     {
         Init();

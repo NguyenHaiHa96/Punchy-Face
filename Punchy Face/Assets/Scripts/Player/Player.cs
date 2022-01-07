@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float radiusCheck;
     [SerializeField] private float attackInterval;
     [SerializeField] private int currentPowerLevel;
+    [SerializeField] private UIFloatingPlayer uiFloating;
 
     private TakeForcePoint takeForcePoint;
     private Vector3 targetPosition;
@@ -50,11 +51,13 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         takeForcePoint = spine.GetComponent<TakeForcePoint>();
+        uiFloating = GetComponent<UIFloatingPlayer>();
         victoryPosition = Level.LastChild;
         rb.isKinematic = true;
         elapsedTime = 0f;
-        scaleAddition = 1.1f;
-        nextPowerUp = 6;    
+        scaleAddition = 1 + currentPowerLevel * 0.1f;
+        nextPowerUp = 6;
+        StartScaleSize();
     }
 
     // Update is called once per frame
@@ -73,6 +76,11 @@ public class Player : MonoBehaviour
         CheckCollider();
     }
 
+    public void StartScaleSize()
+    {
+        transform.localScale = Vector3.one * (1 + (float) currentPowerLevel / 10);
+    }
+
     public void ReachCheckPoint() 
     {
         agent.enabled = true;
@@ -81,6 +89,7 @@ public class Player : MonoBehaviour
 
     public void OnDeath(Vector3 direction, Vector3 hitPoint)
     {
+        uiFloating.IsDisable = true;
         agent.speed = 0;
         ragdollActivated = true;
         animated.SetActive(false);
@@ -118,8 +127,8 @@ public class Player : MonoBehaviour
     {
         if (currentPowerUp >= nextPowerUp)
         {
-            this.transform.localScale = Vector3.one * scaleAddition;
             scaleAddition += 0.1f;
+            this.transform.localScale = Vector3.one * scaleAddition;          
             currentPowerUp = 0;
             currentPowerLevel += 1;
         }   
@@ -170,7 +179,7 @@ public class Player : MonoBehaviour
         {
             if (!collider.gameObject.CompareTag("Player"))
             {
-                if (collider.gameObject.CompareTag("NPCEnemy") || collider.gameObject.CompareTag("NPCEnemy"))
+                if (collider.gameObject.CompareTag("NPCEnemy") || collider.gameObject.CompareTag("NPCGuard"))
                 {
                     if (Time.time > elapsedTime)
                     {

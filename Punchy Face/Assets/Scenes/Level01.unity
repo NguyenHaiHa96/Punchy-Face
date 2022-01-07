@@ -198,7 +198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108092562}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.02, y: 0.5, z: 21.52}
+  m_LocalPosition: {x: -1.51, y: 0.5, z: 21.54}
   m_LocalScale: {x: 18.36702, y: 1, z: 1.1296997}
   m_Children: []
   m_Father: {fileID: 665347524}
@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280802992}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.09, y: 0.5, z: 21.53}
+  m_LocalPosition: {x: 1.81, y: 0.5, z: 21.53}
   m_LocalScale: {x: 18.36702, y: 1, z: 1.1663514}
   m_Children: []
   m_Father: {fileID: 665347524}
@@ -732,7 +732,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 1942f0475bd70e446895533cf3769c39, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 88a65b9873ea3e34288759dae9016ab1, type: 2}
 --- !u!4 &665347524
 Transform:
   m_ObjectHideFlags: 0
@@ -1303,7 +1303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 65040857198512388, guid: 3825213898f0d674a9309e06af642f36, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 778
+      value: 1032
       objectReference: {fileID: 0}
     - target: {fileID: 219155116994774026, guid: 3825213898f0d674a9309e06af642f36, type: 3}
       propertyPath: m_IsActive
@@ -1395,15 +1395,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219155117151119490, guid: 3825213898f0d674a9309e06af642f36, type: 3}
       propertyPath: m_ReferenceResolution.x
-      value: 1280
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 219155117151119490, guid: 3825213898f0d674a9309e06af642f36, type: 3}
       propertyPath: m_ReferenceResolution.y
-      value: 720
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 219155117151119500, guid: 3825213898f0d674a9309e06af642f36, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199345470146613329, guid: 3825213898f0d674a9309e06af642f36, type: 3}
+      propertyPath: m_text
+      value: LEVEL 0
       objectReference: {fileID: 0}
     - target: {fileID: 4199345470146613329, guid: 3825213898f0d674a9309e06af642f36, type: 3}
       propertyPath: m_fontSize
@@ -1866,7 +1870,7 @@ GameObject:
   - component: {fileID: 1583575505}
   - component: {fileID: 1583575504}
   m_Layer: 0
-  m_Name: Ground (1)
+  m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

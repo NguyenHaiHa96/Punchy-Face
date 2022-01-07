@@ -13,6 +13,7 @@ public class NPCGuard : MonoBehaviour
     [SerializeField] private BoxCollider col;
     [SerializeField] private int currentPowerLevel;
     [SerializeField] private float radiusCheckCollider;
+    [SerializeField] private UIFloatingNPCEnemy uiFloating;
 
     private Vector3 startPosition;
     private TakeForcePoint takeForcePoint;
@@ -27,7 +28,8 @@ public class NPCGuard : MonoBehaviour
     {
         startPosition = transform.position;
         takeForcePoint = spine.GetComponent<TakeForcePoint>();
-        //StartScaleSize();
+        uiFloating = GetComponent<UIFloatingNPCEnemy>();
+        StartScaleSize();
     }
 
     public void OnDeath(Vector3 direction, Vector3 hitPoint)
@@ -42,7 +44,7 @@ public class NPCGuard : MonoBehaviour
 
     public void StartScaleSize()
     {      
-        transform.localScale = Vector3.one * (1 + currentPowerLevel / 10);
+        transform.localScale = Vector3.one * (1 + (float) currentPowerLevel / 10);
     }
 
     IEnumerator ConfirmDeath()

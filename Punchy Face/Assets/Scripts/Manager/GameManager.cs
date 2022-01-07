@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     private int currentLevel;
 
+    public static int sceneIndex;
+
     public GameObject Player { get => player; set => player = value; }
     public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
     public bool LevelCompleted { get => levelCompleted; set => levelCompleted = value; }
@@ -33,11 +35,13 @@ public class GameManager : MonoBehaviour
     public int CurrentLevel { get => currentLevel; set => currentLevel = value; }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         Init();
         StartTask();
         StartSpawn();
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     public void Init()
@@ -104,17 +108,37 @@ public class GameManager : MonoBehaviour
 
     public void GameState() 
     {
+        UIManager.instance.CurrentLevelText.text = "LEVEL " + PlayerPrefs.GetInt("CurrentLevel" , 1);
         if (levelCompleted)
         {
             UIManager.instance.ShowLevelCompletePanel(true);
+            StartCoroutine(TapToContinue());
+
         }
 
         if (IsGameOver)
         {
             UIManager.instance.ShowGameOverPanel(true);
-            TapToReStart();
+            StartCoroutine(TapToReStart());
         }
-    }   
+    }
+    IEnumerator TapToContinue()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (Input.GetMouseButton(0))
+        {
+            if (SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
+            }
+            else if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings)
+            {
+                PlayerPrefs.SetInt("CurrentLevel", currentLevel + 1);
+                SceneManager.LoadScene(sceneIndex + 1, LoadSceneMode.Single);         
+            }
+        }
+    }
 
     IEnumerator TapToReStart()
     {
@@ -122,8 +146,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
         }           
     }
 }

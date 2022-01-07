@@ -25,7 +25,7 @@ public class NPCGuardSpawner : MonoBehaviour
         {
             spawnPositions[i] = npcGuardSpawnPosition.transform.GetChild(i);
         }
-        numberOfGuards = 2;
+        numberOfGuards = GameManager.instance.CurrentLevel;
         npcGuards = new NPCGuard[numberOfGuards];
         for (int i = 0; i < numberOfGuards; i++)
         {

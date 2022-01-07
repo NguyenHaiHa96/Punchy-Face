@@ -15,9 +15,10 @@ public class NPCEnemy : MonoBehaviour
     [SerializeField] private BoxCollider col;
     [SerializeField] private float attackInterval;
     [SerializeField] private float radiusCheckCollider;
-    [SerializeField] private float radiusCheckPowerUp;
-    [SerializeField] private float currentPowerLevel;
+    [SerializeField] private float radiusCheckPowerUp; 
     [SerializeField] private float timeToChangePosition;
+    [SerializeField] private int currentPowerLevel;
+    [SerializeField] private UIFloatingNPCEnemy uiFloating;
 
     private int nextPowerUp = 6;
     private float scaleAddition = 1.1f;
@@ -31,16 +32,20 @@ public class NPCEnemy : MonoBehaviour
     private float radius = 10f;
     private int currentPowerUp = 0;
     private bool isAttacking;
+    private bool tryToWin;
 
-    public float CurrentPowerLevel { get => currentPowerLevel; set => currentPowerLevel = value; }
     public GameObject Spine { get => spine; set => spine = value; }
     public bool IsDeath { get => isDeath; set => isDeath = value; }
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
+    public int CurrentPowerLevel { get => currentPowerLevel; set => currentPowerLevel = value; }
 
     void OnEnable()
-    {     
-        currentPosition = transform.position;
+    {
+        tryToWin = false;
         takeForcePoint = spine.GetComponent<TakeForcePoint>();
+        uiFloating = GetComponent<UIFloatingNPCEnemy>();
+        currentPosition = transform.position;  
+        StartScaleSize();
     }
 
     // Update is called once per frame
@@ -52,21 +57,29 @@ public class NPCEnemy : MonoBehaviour
         TryToWin();   
     }
 
+    public void StartScaleSize()
+    {
+        transform.localScale = Vector3.one * (1 + (float)currentPowerLevel / 10);
+    }
+
     private void TryToWin()
     {
-        if (currentPowerLevel > 2) 
+        if (currentPowerLevel > 5) 
         {
+            tryToWin = true;
             agent.SetDestination(Level.LastChild.position);
         }
     }
 
     public void OnDeath(Vector3 direction, Vector3 hitPoint)
     {
+        agent.speed = 0f;
         animated.SetActive(false);
         ragdoll.SetActive(true);
+        uiFloating.IsDisable = true;      
+        col.enabled = false;
+
         takeForcePoint.ReceiveForce(direction, hitPoint);
-        agent.speed = 0f;
-        col.enabled = false;                 
 
         StartCoroutine(ConfirmDeath());
     }
@@ -88,16 +101,20 @@ public class NPCEnemy : MonoBehaviour
 
     private void CollectPowerUp()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, radiusCheckPowerUp);
-        foreach (var collider in hitColliders)
+        if (!tryToWin)
         {
-            if (collider.gameObject.CompareTag("BluePowerUp"))
+            Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, radiusCheckPowerUp);
+            foreach (var collider in hitColliders)
             {
-                agent.SetDestination(collider.transform.position);
+                if (collider.gameObject.CompareTag("BluePowerUp"))
+                {
+                    agent.SetDestination(collider.transform.position);
+                }
             }
-        }
 
-        StartCoroutine(MoveToRandomPosition());
+            StartCoroutine(MoveToRandomPosition());
+        }
+        
     }
 
     private void ScaleUp()
